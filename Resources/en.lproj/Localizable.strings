@@ -15,11 +15,11 @@
 "sponsor.tooltip" = "Open the GitHub Sponsors page in your browser";
 
 /* Sponsor panel */
-"sponsor.panel_title" = "Support the author ☕";
-"sponsor.note" = "If this little tool helped you, consider buying a coffee ☕";
-"sponsor.wechat" = "WeChat";
+"sponsor.panel_title" = "Support ☕";
+"sponsor.note" = "If this little tool helped you, scan with WeChat or Alipay to support. Your encouragement keeps it maintained.";
+"sponsor.wechat" = "WeChat Pay";
 "sponsor.alipay" = "Alipay";
-"sponsor.qr_missing" = "(QR not bundled)";
+"sponsor.qr_missing" = "(QR image not found)";
 
 /* Open panel */
 "panel.title" = "Choose installers to unblock";

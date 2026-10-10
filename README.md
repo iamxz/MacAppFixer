@@ -93,17 +93,20 @@ Release: write `docs/release-notes/vX.Y.Z.md`, then `make release VERSION=<x.y.z
 
 If this little tool helped you, consider buying the author a coffee ☕
 
-- **WeChat / Alipay QR** (easiest for China): see below
+Scan with **WeChat** or **Alipay** to support — your encouragement keeps the project going:
 
-<p align="center">
-  <img src="screenshots/wechat.jpg" width="170" alt="WeChat QR">
-  &nbsp;&nbsp;
-  <img src="screenshots/alipay.jpg" width="170" alt="Alipay QR">
-</p>
+<table align="center">
+  <tr>
+    <td align="center"><img src="screenshots/wechat.jpg" width="190" alt="WeChat QR"></td>
+    <td align="center"><img src="screenshots/alipay.jpg" width="190" alt="Alipay QR"></td>
+  </tr>
+  <tr>
+    <td align="center">WeChat Pay</td>
+    <td align="center">Alipay</td>
+  </tr>
+</table>
 
-> The QR images live at `screenshots/wechat.jpg` and `screenshots/alipay.jpg`, shown both above and in the in-app "Sponsor" panel.
-
-Your support keeps the project going.
+> The QR codes live at `screenshots/wechat.jpg` and `screenshots/alipay.jpg`, also shown in the in-app "Sponsor" panel.
 
 ## License
 

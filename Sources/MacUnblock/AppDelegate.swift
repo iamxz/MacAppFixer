@@ -219,7 +219,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             wechatView.topAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 20),
             wechatView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: padding),
-            wechatView.widthAnchor.constraint(equalToConstant: 160),
+            wechatView.widthAnchor.constraint(equalToConstant: 170),
             wechatView.heightAnchor.constraint(equalToConstant: 200),
 
             alipayView.topAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 20),
@@ -232,13 +232,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return container
     }
 
+    /// 把任意尺寸的图片规整为正方形（白底 contain，不拉伸），让两张收款码显示尺寸一致、对齐。
+    private func squareImage(from image: NSImage, size: CGFloat) -> NSImage {
+        let result = NSImage(size: NSSize(width: size, height: size))
+        result.lockFocus()
+        NSColor.white.setFill()
+        NSRect(x: 0, y: 0, width: size, height: size).fill()
+        let src = image.size
+        let scale = min(size / src.width, size / src.height)
+        let drawW = src.width * scale
+        let drawH = src.height * scale
+        image.draw(in: NSRect(x: (size - drawW) / 2, y: (size - drawH) / 2, width: drawW, height: drawH))
+        result.unlockFocus()
+        return result
+    }
+
     /// 构造一个「二维码 + 说明」单元；若 bundle 内没有对应图片则显示占位文案。
     private func makeQRCell(resource: String, caption: String) -> NSView {
         let cell = NSView()
         cell.translatesAutoresizingMaskIntoConstraints = false
 
         let imageView = NSImageView()
-        imageView.imageScaling = .scaleProportionallyUpOrDown
+        imageView.imageScaling = .scaleNone
         imageView.wantsLayer = true
         imageView.layer?.cornerRadius = 8
         imageView.layer?.borderWidth = 1
@@ -247,7 +262,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let url = Bundle.main.url(forResource: resource, withExtension: "jpg"),
            let image = NSImage(contentsOf: url) {
-            imageView.image = image
+            // 规整为统一正方形，保证两张收款码显示尺寸一致、对齐（不拉伸，二维码仍可扫）
+            imageView.image = squareImage(from: image, size: 340)
+            imageView.imageScaling = .scaleNone
         }
 
         let captionLabel = NSTextField(labelWithString: caption)
