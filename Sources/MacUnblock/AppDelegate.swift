@@ -105,6 +105,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         chooseButton.keyEquivalent = "\r"   // 回车即打开选择器
         chooseButton.translatesAutoresizingMaskIntoConstraints = false
 
+        // --- 赞助按钮（打开赞助面板：GitHub Sponsors + 微信/支付宝收款码）---
+        let sponsorButton = NSButton(title: L.t("sponsor.title"), target: self, action: #selector(showSponsorPanel))
+        sponsorButton.bezelStyle = .rounded
+        sponsorButton.controlSize = .small
+        sponsorButton.toolTip = L.t("sponsor.tooltip")
+        sponsorButton.translatesAutoresizingMaskIntoConstraints = false
+
         // --- 结果显示区域 ---
         resultLabel = NSTextField(labelWithString: "")
         resultLabel.font = .systemFont(ofSize: 12)
@@ -119,6 +126,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         containerView.addSubview(descLabel)
         containerView.addSubview(dropAreaView)
         containerView.addSubview(chooseButton)
+        containerView.addSubview(sponsorButton)
         containerView.addSubview(resultLabel)
 
         NSLayoutConstraint.activate([
@@ -139,7 +147,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             chooseButton.topAnchor.constraint(equalTo: dropAreaView.bottomAnchor, constant: 14),
             chooseButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
 
-            resultLabel.topAnchor.constraint(equalTo: chooseButton.bottomAnchor, constant: 16),
+            sponsorButton.topAnchor.constraint(equalTo: chooseButton.bottomAnchor, constant: 10),
+            sponsorButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+
+            resultLabel.topAnchor.constraint(equalTo: sponsorButton.bottomAnchor, constant: 12),
             resultLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             resultLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             resultLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -20),
@@ -153,6 +164,125 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func showResult(_ text: String, color: NSColor) {
         resultLabel.stringValue = text
         resultLabel.textColor = color
+    }
+
+    /// 打开赞助面板：展示 GitHub Sponsors 链接与微信/支付宝收款码。
+    @objc func showSponsorPanel() {
+        let panel = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 440, height: 300),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        panel.title = L.t("sponsor.panel_title")
+        panel.isReleasedWhenClosed = true
+        panel.contentView = buildSponsorContentView()
+        panel.center()
+        panel.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    // MARK: - 赞助面板内容
+
+    private func buildSponsorContentView() -> NSView {
+        let container = NSView()
+        let padding: CGFloat = 24
+
+        let titleLabel = NSTextField(labelWithString: L.t("sponsor.panel_title"))
+        titleLabel.font = .systemFont(ofSize: 16, weight: .bold)
+        titleLabel.alignment = .center
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let noteLabel = NSTextField(labelWithString: L.t("sponsor.note"))
+        noteLabel.font = .systemFont(ofSize: 12)
+        noteLabel.textColor = .secondaryLabelColor
+        noteLabel.alignment = .center
+        noteLabel.lineBreakMode = .byWordWrapping
+        noteLabel.maximumNumberOfLines = 0
+        noteLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let wechatView = makeQRCell(resource: "wechat", caption: L.t("sponsor.wechat"))
+        let alipayView = makeQRCell(resource: "alipay", caption: L.t("sponsor.alipay"))
+
+        container.addSubview(titleLabel)
+        container.addSubview(noteLabel)
+        container.addSubview(wechatView)
+        container.addSubview(alipayView)
+
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: padding),
+            titleLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+
+            noteLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            noteLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: padding),
+            noteLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -padding),
+
+            wechatView.topAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 20),
+            wechatView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: padding),
+            wechatView.widthAnchor.constraint(equalToConstant: 160),
+            wechatView.heightAnchor.constraint(equalToConstant: 200),
+
+            alipayView.topAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 20),
+            alipayView.leadingAnchor.constraint(equalTo: wechatView.trailingAnchor, constant: 16),
+            alipayView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -padding),
+            alipayView.widthAnchor.constraint(equalTo: wechatView.widthAnchor),
+            alipayView.heightAnchor.constraint(equalTo: wechatView.heightAnchor),
+        ])
+
+        return container
+    }
+
+    /// 构造一个「二维码 + 说明」单元；若 bundle 内没有对应图片则显示占位文案。
+    private func makeQRCell(resource: String, caption: String) -> NSView {
+        let cell = NSView()
+        cell.translatesAutoresizingMaskIntoConstraints = false
+
+        let imageView = NSImageView()
+        imageView.imageScaling = .scaleProportionallyUpOrDown
+        imageView.wantsLayer = true
+        imageView.layer?.cornerRadius = 8
+        imageView.layer?.borderWidth = 1
+        imageView.layer?.borderColor = NSColor.separatorColor.cgColor
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        if let url = Bundle.main.url(forResource: resource, withExtension: "jpg"),
+           let image = NSImage(contentsOf: url) {
+            imageView.image = image
+        }
+
+        let captionLabel = NSTextField(labelWithString: caption)
+        captionLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        captionLabel.alignment = .center
+        captionLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        cell.addSubview(imageView)
+        cell.addSubview(captionLabel)
+
+        if imageView.image == nil {
+            let missing = NSTextField(labelWithString: L.t("sponsor.qr_missing"))
+            missing.font = .systemFont(ofSize: 11)
+            missing.textColor = .tertiaryLabelColor
+            missing.alignment = .center
+            missing.translatesAutoresizingMaskIntoConstraints = false
+            cell.addSubview(missing)
+            NSLayoutConstraint.activate([
+                missing.centerXAnchor.constraint(equalTo: cell.centerXAnchor),
+                missing.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
+            ])
+        }
+
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: cell.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
+            imageView.heightAnchor.constraint(equalTo: cell.widthAnchor),
+
+            captionLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            captionLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor),
+            captionLabel.bottomAnchor.constraint(equalTo: cell.bottomAnchor),
+        ])
+
+        return cell
     }
 
     /// 文件选择器（第二种入口：点击拖拽区域或「选择文件…」按钮）

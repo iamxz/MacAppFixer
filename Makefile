@@ -69,6 +69,9 @@ assemble:
 		[ -d "$$lproj" ] || continue; \
 		ditto "$$lproj" "$(APP_BUNDLE)/Contents/Resources/$$(basename $$lproj)"; \
 	done
+	for qr in screenshots/wechat.jpg screenshots/alipay.jpg; do \
+		[ -f "$$qr" ] && cp "$$qr" "$(APP_BUNDLE)/Contents/Resources/$$(basename $$qr)" || true; \
+	done
 	codesign --force --sign - --entitlements "$(ENTITLEMENTS)" "$(APP_BUNDLE)"
 	codesign --verify --deep --strict "$(APP_BUNDLE)" && echo "✅ 签名校验通过"
 	@echo "Built $(APP_BUNDLE)"

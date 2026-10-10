@@ -89,6 +89,22 @@ UI strings live in `Resources/{en,zh-Hans}.lproj/Localizable.strings` via `L.t("
 
 Release: write `docs/release-notes/vX.Y.Z.md`, then `make release VERSION=<x.y.z|patch|minor|major> MSG="…"`. The pushed tag triggers GitHub Actions to publish the Release. See [AGENTS.md](AGENTS.md).
 
+## Sponsor
+
+If this little tool helped you, consider buying the author a coffee ☕
+
+- **WeChat / Alipay QR** (easiest for China): see below
+
+<p align="center">
+  <img src="screenshots/wechat.jpg" width="170" alt="WeChat QR">
+  &nbsp;&nbsp;
+  <img src="screenshots/alipay.jpg" width="170" alt="Alipay QR">
+</p>
+
+> The QR images live at `screenshots/wechat.jpg` and `screenshots/alipay.jpg`, shown both above and in the in-app "Sponsor" panel.
+
+Your support keeps the project going.
+
 ## License
 
 [MIT](LICENSE) © 2026 iamxz

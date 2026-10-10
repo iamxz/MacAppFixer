@@ -10,6 +10,17 @@
 /* 按钮 */
 "button.choose" = "选择文件…";
 
+/* 打赏 */
+"sponsor.title" = "赞助 ♥";
+"sponsor.tooltip" = "在浏览器中打开 GitHub Sponsors 打赏页";
+
+/* 赞助面板 */
+"sponsor.panel_title" = "赞助作者 ☕";
+"sponsor.note" = "如果这个小工具帮到了你，欢迎赞助一杯咖啡 ☕";
+"sponsor.wechat" = "微信";
+"sponsor.alipay" = "支付宝";
+"sponsor.qr_missing" = "（二维码未打包）";
+
 /* 文件选择面板 */
 "panel.title" = "选择要解除限制的安装包";
 "panel.message" = "支持 .app / .pkg / .mpkg / .dmg / .ipa / .appex，可按住 ⌘ 或 ⇧ 多选";
