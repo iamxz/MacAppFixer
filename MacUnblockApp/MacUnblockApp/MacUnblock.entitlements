@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  主应用必须运行在 App Sandbox 之外，否则无法移除 com.apple.quarantine：
+  /System/Library/Sandbox/Profiles/application.sb 中硬编码了
+      (deny file-write-xattr (xattr "com.apple.quarantine") (with no-log))
+  任何沙箱进程都会被拒绝写这个属性，且无法通过 entitlements 绕过。
+  因此这里刻意保持为空（不使用 com.apple.security.app-sandbox）。
+-->
 <plist version="1.0">
-<dict>
-    <key>com.apple.security.app-sandbox</key>
-    <true/>
-    <key>com.apple.security.files.user-selected.read-write</key>
-    <true/>
-</dict>
+<dict/>
 </plist>

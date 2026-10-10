@@ -3,17 +3,29 @@
 <plist version="1.0">
 <dict>
 	<key>files</key>
-	<dict/>
+	<dict>
+		<key>Resources/AppIcon.icns</key>
+		<data>
+		lvvDhkYA5XnQyTSvQMJcRM7navw=
+		</data>
+	</dict>
 	<key>files2</key>
 	<dict>
 		<key>PlugIns/MacUnblockAppFinderSync.appex</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			DodDlw8ZKfyq5SZcmQCxAg7cvRg=
+			zrQuRhKJzeQdQByru2eCKAFBxsg=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"0e8743970f1929fcaae5265c9900b1020edcbd18"</string>
+			<string>cdhash H"ceb42e461289cde41d401cabbb6782280141c6c8"</string>
+		</dict>
+		<key>Resources/AppIcon.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Fu0NB1XAVOIsZpxUjAU/mGgW+D4JjNtHDK8porGk20Q=
+			</data>
 		</dict>
 	</dict>
 	<key>rules</key>

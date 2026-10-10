@@ -2,6 +2,10 @@ import Cocoa
 import FinderSync
 
 class SyncDelegate: FIFinderSync {
+
+    /// 与主应用约定的 URL Scheme（主应用 Info.plist 中注册）
+    private static let urlScheme = "macunblock"
+
     override init() {
         super.init()
         let dir = FIFinderSyncController.default()
@@ -22,17 +26,32 @@ class SyncDelegate: FIFinderSync {
         return NSImage(systemSymbolName: "shield.lefthalf.filled", accessibilityDescription: "MacUnblock") ?? NSImage()
     }
 
+    // MARK: - Supported Extensions
+
+    /// 所有支持的安装包格式
+    static let supportedExtensions: Set<String> = [
+        "app",    // 应用程序
+        "pkg",    // 安装包
+        "mpkg",   // 多包安装包
+        "dmg",    // 磁盘映像
+        "ipa",    // iOS 应用包
+        "appex",  // 应用扩展
+    ]
+
+    func isSupportedFile(_ url: URL) -> Bool {
+        return SyncDelegate.supportedExtensions.contains(url.pathExtension.lowercased())
+    }
+
     // MARK: - Menu Items
 
     override func menu(for menuKind: FIMenuKind) -> NSMenu? {
-        // Only show context menu when .app files are selected
         let selectedURLs = FIFinderSyncController.default().selectedItemURLs() ?? []
         let targetedURL = FIFinderSyncController.default().targetedURL()
 
-        let hasApp = selectedURLs.contains(where: { $0.pathExtension == "app" })
-        let targetedIsApp = targetedURL?.pathExtension == "app"
+        let hasSupported = selectedURLs.contains(where: { isSupportedFile($0) })
+        let targetedIsSupported = targetedURL.map { isSupportedFile($0) } ?? false
 
-        if !hasApp && !targetedIsApp {
+        if !hasSupported && !targetedIsSupported {
             return nil
         }
 
@@ -44,136 +63,58 @@ class SyncDelegate: FIFinderSync {
     }
 
     // MARK: - Actions
+    //
+    // Finder 扩展必须运行在 App Sandbox 中，而沙箱进程被系统禁止写
+    // com.apple.quarantine（application.sb 里硬编码了 deny file-write-xattr），
+    // 因此这里不做实际处理，只把请求通过 macunblock:// 转交给不带沙箱的主应用。
 
     @IBAction func unblockApp(_ sender: AnyObject?) {
-        var appURLs = (FIFinderSyncController.default().selectedItemURLs() ?? []).filter {
-            $0.pathExtension == "app"
-        }
-
-        if appURLs.isEmpty {
-            if let targeted = FIFinderSyncController.default().targetedURL(),
-               targeted.pathExtension == "app" {
-                appURLs = [targeted]
-            }
-        }
-
-        if appURLs.isEmpty {
-            return
-        }
-
-        var successCount = 0
-        var failCount = 0
-        var messages: [String] = []
-
-        for url in appURLs {
-            let result = unblockSingleApp(url)
-            if result.success {
-                successCount += 1
-            } else {
-                failCount += 1
-            }
-            messages.append("\(url.lastPathComponent): \(result.message)")
-        }
-
-        let title: String
-        let body: String
-        if failCount == 0 {
-            title = "✅ 解除成功"
-            body = appURLs.count == 1
-                ? "已移除 \"\(appURLs[0].lastPathComponent)\" 的隔离属性\n现在可以正常打开了。"
-                : "已成功解除 \(successCount) 个应用的限制"
-        } else if successCount == 0 {
-            title = "❌ 解除失败"
-            body = messages.joined(separator: "\n")
-        } else {
-            title = "⚠️ 部分成功"
-            body = "成功: \(successCount), 失败: \(failCount)\n" + messages.joined(separator: "\n")
-        }
-
-        showAlert(title: title, body: body)
-    }
-
-    func unblockSingleApp(_ appURL: URL) -> (success: Bool, message: String) {
-        let appPath = appURL.path
-
-        // Remove quarantine attribute (com.apple.quarantine) recursively
-        let result = runXattr(args: ["-r", "-d", "com.apple.quarantine", appPath])
-        if !result.success {
-            return (false, "移除 com.apple.quarantine 失败: \(result.error)")
-        }
-
-        // Also try to remove com.apple.provenance if present (may fail due to SIP)
-        _ = runXattr(args: ["-r", "-d", "com.apple.provenance", appPath])
-
-        // List remaining xattr and remove all
-        let listResult = runXattrCapture(args: [appPath])
-        if listResult.success {
-            for attr in listResult.output.components(separatedBy: "\n") {
-                let trimmed = attr.trimmingCharacters(in: .whitespacesAndNewlines)
-                if trimmed.isEmpty { continue }
-                if trimmed == "com.apple.quarantine" || trimmed == "com.apple.provenance" { continue }
-                _ = runXattr(args: ["-r", "-d", trimmed, appPath])
-            }
-        }
-
-        return (true, "OK")
+        let urls = selectedSupportedURLs()
+        guard !urls.isEmpty else { return }
+        forward(action: "unblock", urls: urls)
     }
 
     @IBAction func showXattrInfo(_ sender: AnyObject?) {
-        let appURLs = (FIFinderSyncController.default().selectedItemURLs() ?? []).filter {
-            $0.pathExtension == "app"
-        }
-
-        for url in appURLs {
-            let result = runXattrCapture(args: ["-l", url.path])
-            let output = result.success ? result.output : "（无法读取扩展属性）"
-            showAlert(
-                title: "扩展属性 - \(url.lastPathComponent)",
-                body: output.isEmpty ? "（无扩展属性）" : output
-            )
-        }
+        let urls = selectedSupportedURLs()
+        guard !urls.isEmpty else { return }
+        forward(action: "info", urls: urls)
     }
 
-    // MARK: - Shell Helpers
+    // MARK: - Helpers
 
-    func runXattr(args: [String]) -> (success: Bool, error: String) {
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/xattr")
-        task.arguments = args
-        let errPipe = Pipe()
-        task.standardError = errPipe
-        do {
-            try task.run()
-            task.waitUntilExit()
-            if task.terminationStatus != 0 {
-                let errData = errPipe.fileHandleForReading.readDataToEndOfFile()
-                let errOutput = String(data: errData, encoding: .utf8) ?? "unknown error"
-                // xattr returns non-zero if attribute doesn't exist, which is OK
-                if errOutput.contains("No such xattr") {
-                    return (true, "")
-                }
-                return (false, errOutput)
+    private func selectedSupportedURLs() -> [URL] {
+        let selected = (FIFinderSyncController.default().selectedItemURLs() ?? []).filter {
+            isSupportedFile($0)
+        }
+        if !selected.isEmpty { return selected }
+
+        if let targeted = FIFinderSyncController.default().targetedURL(), isSupportedFile(targeted) {
+            return [targeted]
+        }
+        return []
+    }
+
+    private func forward(action: String, urls: [URL]) {
+        var failed: [String] = []
+
+        for url in urls {
+            var components = URLComponents()
+            components.scheme = SyncDelegate.urlScheme
+            components.host = action
+            components.queryItems = [URLQueryItem(name: "path", value: url.path)]
+
+            guard let request = components.url, NSWorkspace.shared.open(request) else {
+                failed.append(url.lastPathComponent)
+                continue
             }
-            return (true, "")
-        } catch {
-            return (false, error.localizedDescription)
         }
-    }
 
-    func runXattrCapture(args: [String]) -> (success: Bool, output: String) {
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/xattr")
-        task.arguments = args
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        do {
-            try task.run()
-            task.waitUntilExit()
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            let output = String(data: data, encoding: .utf8) ?? ""
-            return (true, output)
-        } catch {
-            return (false, "")
+        if !failed.isEmpty {
+            showAlert(
+                title: "无法启动 MacUnblock",
+                body: "以下文件没能交给主应用处理：\n\(failed.joined(separator: "\n"))\n\n"
+                    + "请先手动打开 MacUnblock.app，再把文件拖进窗口完成解除。"
+            )
         }
     }
 

@@ -10,19 +10,23 @@
 		A10001 /* MacUnblock in Frameworks */ = {isa = PBXBuildFile; };
 		A10002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20001; };
 		A10003 /* NSViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20002; };
-		A10004 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20003; };
+		A10004 /* SyncDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20003; };
+		A10012 /* SetupGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20006; };
 		A10005 /* Info.plist (Main App) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = "Info.plist"; path = "MacUnblockApp/Info.plist"; sourceTree = "<group>"; };
 		A10006 /* Info.plist (Finder Sync) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = "Info.plist"; path = "MacUnblockAppFinderSync/Info.plist"; sourceTree = "<group>"; };
 		A10007 /* MacUnblock.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "MacUnblock.entitlements"; sourceTree = "<group>"; };
 		A10008 /* MacUnblockAppFinderSync.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "MacUnblockAppFinderSync.entitlements"; sourceTree = "<group>"; };
+		A10009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10011; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A20001 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A20002 /* NSViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSViewExtension.swift; sourceTree = "<group>"; };
-		A20003 /* FinderSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinderSync.swift; sourceTree = "<group>"; };
+		A20003 /* SyncDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncDelegate.swift; sourceTree = "<group>"; };
+		A20006 /* SetupGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupGuide.swift; sourceTree = "<group>"; };
 		A20004 /* MacUnblock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacUnblock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20005 /* MacUnblockAppFinderSync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MacUnblockAppFinderSync.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10011 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +60,10 @@
 			isa = PBXGroup;
 			children = (
 				A20001 /* AppDelegate.swift */,
+				A20006 /* SetupGuide.swift */,
 				A20002 /* NSViewExtension.swift */,
 				A10007 /* MacUnblock.entitlements */,
+				A10011 /* Assets.xcassets */,
 			);
 			path = MacUnblockApp;
 			sourceTree = "<group>";
@@ -65,7 +71,7 @@
 		A40003 /* MacUnblockAppFinderSync */ = {
 			isa = PBXGroup;
 			children = (
-				A20003 /* FinderSync.swift */,
+				A20003 /* SyncDelegate.swift */,
 				A10008 /* MacUnblockAppFinderSync.entitlements */,
 			);
 			path = MacUnblockAppFinderSync;
@@ -149,6 +155,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10009 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10002 /* AppDelegate.swift in Sources */,
+				A10012 /* SetupGuide.swift in Sources */,
 				A10003 /* NSViewExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

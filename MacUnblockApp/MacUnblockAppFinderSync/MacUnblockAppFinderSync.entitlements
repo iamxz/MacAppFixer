@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Finder Sync 扩展必须开启 App Sandbox（系统要求），
+  而沙箱进程无法写 com.apple.quarantine，所以扩展只负责菜单与转发,
+  真正的解除动作交给不带沙箱的主应用执行（macunblock:// URL Scheme）。
+  不再需要 temporary-exception.process-exec / absolute-path 之类的例外权限。
+-->
 <plist version="1.0">
 <dict>
     <key>com.apple.security.app-sandbox</key>
     <true/>
     <key>com.apple.security.files.user-selected.read-write</key>
     <true/>
-    <key>com.apple.security.temporary-exception.files.absolute-path.read-write</key>
-    <string>/</string>
-    <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
-    <array>
-        <string>com.apple.coredump</string>
-    </array>
-    <key>com.apple.security.temporary-exception.process-exec</key>
-    <array>
-        <string>/usr/bin/xattr</string>
-    </array>
 </dict>
 </plist>

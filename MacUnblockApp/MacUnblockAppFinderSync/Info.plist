@@ -20,18 +20,16 @@
     <string>12.0</string>
     <key>NSExtension</key>
     <dict>
-        <key>NSExtensionAttributes</key>
-        <dict>
-            <key>NSExtensionFilesystemSupports</key>
-            <dict>
-                <key>NSExtensionFilesystemSupportsVolumes</key>
-                <true/>
-            </dict>
-        </dict>
+        <!--
+          重要：Swift 类的 Objective-C 运行时名字带模块前缀（MacUnblockAppFinderSync.SyncDelegate）。
+          这里必须写全名，否则扩展宿主用 NSClassFromString 找不到主类，
+          扩展加载失败 —— Finder 右键菜单里就永远看不到这一项。
+          （模块名必须与 build.sh 的 -module-name 以及 Xcode 的 PRODUCT_MODULE_NAME 一致）
+        -->
         <key>NSExtensionPointIdentifier</key>
         <string>com.apple.FinderSync</string>
         <key>NSExtensionPrincipalClass</key>
-        <string>SyncDelegate</string>
+        <string>MacUnblockAppFinderSync.SyncDelegate</string>
     </dict>
 </dict>
 </plist>
