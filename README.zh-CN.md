@@ -95,10 +95,10 @@ xattr -d  com.apple.quarantine /path/to/DiskImage.dmg
 
 用 **微信** 或 **支付宝** 扫码即可支持，你的鼓励是继续维护下去的动力：
 
-<table align="center">
+<table align="center" cellpadding="14">
   <tr>
-    <td align="center"><img src="screenshots/wechat.jpg" width="190" alt="微信赞赏二维码"></td>
-    <td align="center"><img src="screenshots/alipay.jpg" width="190" alt="支付宝赞赏二维码"></td>
+    <td align="center"><img src="screenshots/wechat.jpg" width="180" alt="微信赞赏二维码"></td>
+    <td align="center"><img src="screenshots/alipay.jpg" width="180" alt="支付宝赞赏二维码"></td>
   </tr>
   <tr>
     <td align="center">微信支付</td>

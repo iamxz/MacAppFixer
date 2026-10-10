@@ -95,10 +95,10 @@ If this little tool helped you, consider buying the author a coffee ☕
 
 Scan with **WeChat** or **Alipay** to support — your encouragement keeps the project going:
 
-<table align="center">
+<table align="center" cellpadding="14">
   <tr>
-    <td align="center"><img src="screenshots/wechat.jpg" width="190" alt="WeChat QR"></td>
-    <td align="center"><img src="screenshots/alipay.jpg" width="190" alt="Alipay QR"></td>
+    <td align="center"><img src="screenshots/wechat.jpg" width="180" alt="WeChat QR"></td>
+    <td align="center"><img src="screenshots/alipay.jpg" width="180" alt="Alipay QR"></td>
   </tr>
   <tr>
     <td align="center">WeChat Pay</td>
