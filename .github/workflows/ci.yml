@@ -34,7 +34,7 @@ jobs:
       - name: Run unit tests
         run: make test
 
-      - name: Build .app (universal: arm64 + x86_64)
+      - name: "Build .app (universal: arm64 + x86_64)"
         run: make universal
 
       - name: Verify code signature
