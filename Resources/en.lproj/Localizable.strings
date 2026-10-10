@@ -1,0 +1,41 @@
+/* MacUnblock — English (development language) */
+
+/* Main window */
+"window.subtitle" = "Drag an installer below, or click to choose a file";
+
+/* Drop area */
+"drop.title" = "Drop an installer here";
+"drop.subtitle" = "Or click here to choose a file\nSupports .app .pkg .mpkg .dmg .ipa .appex";
+
+/* Buttons */
+"button.choose" = "Choose File…";
+
+/* Open panel */
+"panel.title" = "Choose installers to unblock";
+"panel.message" = "Supports .app / .pkg / .mpkg / .dmg / .ipa / .appex — hold ⌘ or ⇧ to select multiple";
+"panel.prompt" = "Unblock";
+
+/* Results */
+"result.unsupported" = "⚠️ Unsupported file type. Drag in or choose a .app .pkg .dmg .mpkg .ipa .appex file.";
+"result.processing" = "⏳ Processing %d file(s)…";
+"result.file_entry" = "%@: %@";
+"result.single_ok" = "✅ Unblocked “%@”\n%@ You can open it now.";
+"result.multi_ok" = "✅ Successfully unblocked %d file(s)";
+"result.all_failed" = "❌ Failed to unblock\n%@";
+"result.partial" = "⚠️ %d succeeded, %d failed\n%@";
+
+/* Extended attributes */
+"xattr.none" = "🔍 %@: no extended attributes";
+"xattr.list" = "🔍 Extended attributes of %@:\n%@";
+
+/* Unblock failure reasons */
+"unblock.notfound" = "The file does not exist or has been moved";
+"unblock.clean" = "No quarantine attributes found — nothing to do";
+"unblock.partial" = "Removed %d extended attribute(s); %d could not be removed (%@). This usually does not affect usage";
+"unblock.done" = "Removed %d extended attribute(s)";
+
+/* System error descriptions */
+"err.permission" = "Permission denied (%@). Grant MacUnblock access in System Settings → Privacy & Security → Full Disk Access, then try again. If the file is in a protected folder (Desktop, Downloads, Documents), click “Allow” in the system prompt the first time you access it";
+"err.readonly" = "The file system is read-only; extended attributes cannot be modified";
+"err.notsup" = "This file system does not support extended attributes";
+"err.generic" = "%@ (errno %d)";
