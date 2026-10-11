@@ -103,8 +103,8 @@ jobs:
         with:
           tag_name: ${{ env.TAG_NAME }}
           files: |
-            build/MacUnblock-*.pkg
-            build/MacUnblock-*.app.zip
+            build/MacAppFixer-*.pkg
+            build/MacAppFixer-*.app.zip
             build/checksums.txt
           body_path: ${{ env.RELEASE_BODY }}
           generate_release_notes: false

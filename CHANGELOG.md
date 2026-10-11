@@ -9,6 +9,18 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### 中文
+
+**变更**
+- 项目更名为 **MacAppFixer**（曾用名 MacUnblock）：App 名、bundle id（`com.macappfixer.app`）、模块名、构建产物与仓库地址同步更新
+- 更名不影响功能：bundle id 变了，新版本不会覆盖旧安装，需手动删除 `/Applications/MacUnblock.app`
+
+### English
+
+**Changed**
+- Renamed to **MacAppFixer** (formerly MacUnblock): app name, bundle id (`com.macappfixer.app`), module names, build artifacts and repository URL
+- Functionality is unchanged: the bundle id changed, so the new build won't replace an old install — delete `/Applications/MacUnblock.app` manually
+
 ## [1.0.0] - 2026-10-10
 
 ### 中文
@@ -33,5 +45,5 @@ All notable changes to this project are documented here. The format is based on
 - `make pkg` produces a Universal (arm64 + x86_64) installer
 - GitHub Actions: CI build checks + tag-triggered packaging and release
 
-[Unreleased]: https://github.com/iamxz/MacUnblockApp/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/iamxz/MacUnblockApp/releases/tag/v1.0.0
+[Unreleased]: https://github.com/iamxz/MacAppFixer/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/iamxz/MacAppFixer/releases/tag/v1.0.0

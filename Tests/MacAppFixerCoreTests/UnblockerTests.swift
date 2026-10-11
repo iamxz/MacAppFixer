@@ -1,6 +1,6 @@
 import XCTest
 import Darwin
-@testable import MacUnblockCore
+@testable import MacAppFixerCore
 
 final class UnblockerTests: XCTestCase {
 
@@ -27,7 +27,7 @@ final class UnblockerTests: XCTestCase {
         let file = try makeTempFile(named: "sample.bin")
         defer { try? FileManager.default.removeItem(at: file.deletingLastPathComponent()) }
 
-        let name = "com.macunblock.test"
+        let name = "com.macappfixer.test"
         try setUserXattr(name, value: "1", at: file.path)
 
         XCTAssertTrue(Xattr.list(file.path).contains(name), "设置后应能列出该属性")
@@ -46,7 +46,7 @@ final class UnblockerTests: XCTestCase {
         let nestedFile = nestedDir.appendingPathComponent("inner.bin")
         FileManager.default.createFile(atPath: nestedFile.path, contents: Data("hi".utf8))
 
-        let name = "com.macunblock.test"
+        let name = "com.macappfixer.test"
         try setUserXattr(name, value: "1", at: root.appendingPathComponent("Payload").path)
         try setUserXattr(name, value: "1", at: nestedFile.path)
 
@@ -65,7 +65,7 @@ final class UnblockerTests: XCTestCase {
     }
 
     func testMissingFileReportsNotFound() {
-        let missing = URL(fileURLWithPath: "/tmp/macunblock-does-not-exist-\(UUID().uuidString).app")
+        let missing = URL(fileURLWithPath: "/tmp/macappfixer-does-not-exist-\(UUID().uuidString).app")
         let result = Unblocker.unblock(missing)
         XCTAssertFalse(result.ok)
     }
@@ -74,7 +74,7 @@ final class UnblockerTests: XCTestCase {
 
     private func makeTempDirectory() throws -> URL {
         let dir = URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent("macunblock-tests-\(UUID().uuidString)")
+            .appendingPathComponent("macappfixer-tests-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }

@@ -1,5 +1,5 @@
 import Cocoa
-import MacUnblockCore
+import MacAppFixerCore
 
 // MARK: - AppDelegate
 
@@ -22,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         window.center()
-        window.title = "MacUnblock"
+        window.title = "MacAppFixer"
         window.minSize = NSSize(width: 460, height: 500)
         window.contentView = createContentView()
         window.makeKeyAndOrderFront(nil)
@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         iconImageView.symbolConfiguration = .init(pointSize: 40, weight: .regular)
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        let titleLabel = NSTextField(labelWithString: "MacUnblock")
+        let titleLabel = NSTextField(labelWithString: "MacAppFixer")
         titleLabel.font = .systemFont(ofSize: 22, weight: .bold)
         titleLabel.alignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

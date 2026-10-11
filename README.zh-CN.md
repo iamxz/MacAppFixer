@@ -1,23 +1,25 @@
-[![CI](https://github.com/iamxz/MacUnblockApp/actions/workflows/ci.yml/badge.svg)](https://github.com/iamxz/MacUnblockApp/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/iamxz/MacUnblockApp)](https://github.com/iamxz/MacUnblockApp/releases)
+[![CI](https://github.com/iamxz/MacAppFixer/actions/workflows/ci.yml/badge.svg)](https://github.com/iamxz/MacAppFixer/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/iamxz/MacAppFixer)](https://github.com/iamxz/MacAppFixer/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# MacUnblock
+# MacAppFixer
 
 [English](README.md) | **简体中文**
 
-<img src="screenshots/icon.png" width="112" alt="MacUnblock 应用图标">
+<img src="screenshots/icon.png" width="112" alt="MacAppFixer 应用图标">
 
-一个 macOS 小工具：拖入或选中安装包，一键移除隔离属性（`com.apple.quarantine` 等），让「已损坏 / 无法验证开发者」提示消失。
+**修复 Mac 应用装不上 / 打不开：「已损坏，无法打开」「来自身份不明的开发者」。**
+
+一个 macOS 小工具：拖入或选中安装包，一键移除隔离属性（`com.apple.quarantine` 等），让提示消失。
 
 支持 `.app`、`.pkg`、`.mpkg`、`.dmg`、`.ipa`、`.appex`。界面中英双语，跟随系统「语言与地区」自动切换。
 
 ## 截图
 
 <p align="center">
-  <img src="screenshots/screenshot-zh.jpg" width="360" alt="MacUnblock 主窗口（简体中文）">
+  <img src="screenshots/screenshot-zh.jpg" width="360" alt="MacAppFixer 主窗口（简体中文）">
   &nbsp;&nbsp;
-  <img src="screenshots/screenshot-en.jpg" width="360" alt="MacUnblock 主窗口（English）">
+  <img src="screenshots/screenshot-en.jpg" width="360" alt="MacAppFixer 主窗口（English）">
 </p>
 
 ## 功能
@@ -37,27 +39,29 @@
 
 ### 方式一：下载安装包（推荐）
 
-从 [GitHub Releases](https://github.com/iamxz/MacUnblockApp/releases) 下载最新的 `.pkg`，双击安装到 `/Applications/MacUnblock.app`；或下载 `.app.zip` 解压后拖入「应用程序」。
+从 [GitHub Releases](https://github.com/iamxz/MacAppFixer/releases) 下载最新的 `.pkg`，双击安装到 `/Applications/MacAppFixer.app`；或下载 `.app.zip` 解压后拖入「应用程序」。
 
 > app 为 ad-hoc 签名、未公证，首次可能被 Gatekeeper 拦截：右键「打开」，或 系统设置 → 隐私与安全性 → 仍要打开。
+
+> 本项目曾用名 **MacUnblock**（旧 bundle id `com.macunblock.app`）。bundle id 已变，新版本不会覆盖旧安装，请先手动删除 `/Applications/MacUnblock.app`。
 
 ### 方式二：从源码构建
 
 ```bash
-git clone https://github.com/iamxz/MacUnblockApp.git
-cd MacUnblockApp
-make install      # 编译 → 签名 → 安装到 /Applications/MacUnblock.app
+git clone https://github.com/iamxz/MacAppFixer.git
+cd MacAppFixer
+make install      # 编译 → 签名 → 安装到 /Applications/MacAppFixer.app
 ```
 
 ## 使用方法
 
-1. 打开 `/Applications/MacUnblock.app`
+1. 打开 `/Applications/MacAppFixer.app`
 2. 把文件**拖到窗口拖拽区域**；或**点击区域 / 「选择文件…」**（⌘ / ⇧ 可多选）
 3. 自动移除隔离属性，结果在底部显示
 
 ## 常见问题
 
-**提示权限不足？** 桌面 / 下载 / 文稿等目录首次访问会请求「完全磁盘访问权限」，点击「允许」；若之前拒绝过，在 系统设置 → 隐私与安全性 → 完全磁盘访问权限 中勾选 MacUnblock 后重启。
+**提示权限不足？** 桌面 / 下载 / 文稿等目录首次访问会请求「完全磁盘访问权限」，点击「允许」；若之前拒绝过，在 系统设置 → 隐私与安全性 → 完全磁盘访问权限 中勾选 MacAppFixer 后重启。
 
 **重新构建后又要重新授权？** 应用使用 ad-hoc 签名，每次重编译身份都变。固定在 `/Applications` 并减少重编译即可减少打扰。
 
@@ -79,7 +83,7 @@ xattr -d  com.apple.quarantine /path/to/DiskImage.dmg
 
 | 命令 | 作用 |
 |------|------|
-| `make` / `make build` | 编译 + 组装 → `build/MacUnblock.app` |
+| `make` / `make build` | 编译 + 组装 → `build/MacAppFixer.app` |
 | `make universal` | 通用架构（arm64 + x86_64） |
 | `make test` | 单元测试 |
 | `make install` | 组装 + 安装到 `/Applications` |

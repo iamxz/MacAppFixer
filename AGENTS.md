@@ -2,14 +2,16 @@
 
 ## 项目速览
 
-MacUnblock 是一个 macOS 小工具（AppKit），通过「拖拽」或「选择文件」两种方式递归移除安装包上的隔离属性（`com.apple.quarantine` 等）。
+MacAppFixer 是一个 macOS 小工具（AppKit），通过「拖拽」或「选择文件」两种方式递归移除安装包上的隔离属性（`com.apple.quarantine` 等）。
+
+项目曾用名 **MacUnblock**，v1.0.0 之后全量改名为 MacAppFixer（含 bundle id `com.macappfixer.app`）；仓库里若再出现 `MacUnblock` 字样，属于需要清理的残留。
 
 项目用 **Swift Package Manager** 组织（见 `Package.swift`），源码按「逻辑层 / 应用层」拆分：
 
-- `Sources/MacUnblockCore/` — 逻辑层：xattr 读写（`Xattr`）、递归解除（`Unblocker`）、本地化入口（`L`）。**不依赖 AppKit**，可被单元测试直接覆盖。
-- `Sources/MacUnblock/` — 应用层：AppKit 界面（`AppDelegate`、`DropAreaView`）与程序入口（`main.swift`），依赖逻辑层。
-- `Resources/` — `Info.plist`、图标 `MacUnblock.icns`、空 `MacUnblock.entitlements`、`en.lproj` 与 `zh-Hans.lproj`。
-- `Tests/MacUnblockCoreTests/` — 逻辑层单元测试。
+- `Sources/MacAppFixerCore/` — 逻辑层：xattr 读写（`Xattr`）、递归解除（`Unblocker`）、本地化入口（`L`）。**不依赖 AppKit**，可被单元测试直接覆盖。
+- `Sources/MacAppFixer/` — 应用层：AppKit 界面（`AppDelegate`、`DropAreaView`）与程序入口（`main.swift`），依赖逻辑层。
+- `Resources/` — `Info.plist`、图标 `MacAppFixer.icns`、空 `MacAppFixer.entitlements`、`en.lproj` 与 `zh-Hans.lproj`。
+- `Tests/MacAppFixerCoreTests/` — 逻辑层单元测试。
 - `Makefile` — 构建 / 组装 `.app` / 签名 / 打包 / 发版封装。
 
 ## 每次修改代码后
@@ -17,31 +19,31 @@ MacUnblock 是一个 macOS 小工具（AppKit），通过「拖拽」或「选�
 必须重新构建并重启应用以验证改动：
 
 ```bash
-# 1. 编译并组装（产物在 build/MacUnblock.app）
+# 1. 编译并组装（产物在 build/MacAppFixer.app）
 make build
 
 # 2. 先关闭正在运行的实例（如果有）
-killall MacUnblock 2>/dev/null || true
+killall MacAppFixer 2>/dev/null || true
 
 # 3. 重新启动
-open build/MacUnblock.app
+open build/MacAppFixer.app
 ```
 
 不要只编译不重启。每次改动都要执行完整流程，确保改动生效。
 
 ## 构建与校验
 
-- `make build` — 编译并组装 `.app`（本机架构，产物在 `build/MacUnblock.app`）
+- `make build` — 编译并组装 `.app`（本机架构，产物在 `build/MacAppFixer.app`）
 - `make universal` — 通用架构（arm64 + x86_64）编译 + 组装
 - `make test` — 运行逻辑层单元测试（`swift test`）
-- `codesign --verify --deep --strict build/MacUnblock.app` — 校验 ad-hoc 签名
+- `codesign --verify --deep --strict build/MacAppFixer.app` — 校验 ad-hoc 签名
 - CI 的通过标准：编译通过 + 单元测试通过 + 签名校验 + 通用二进制 + 本地化资源齐全
 
 > 构建原理：`swift build` 只产出可执行文件；`.app` 由 `make assemble` 组装——把 `Resources/` 里的 `Info.plist`、图标、`*.lproj`、`entitlements` 拷进 bundle 并做 ad-hoc 签名。**新增源文件无需改动任何工程文件**（SPM 自动收集 `Sources/<Target>/` 下所有 `.swift`）。
 
 ## 本地化（重要）
 
-界面文案一律走 `L.t("key")`（见 `Sources/MacUnblockCore/Localization.swift`），实际文案放在：
+界面文案一律走 `L.t("key")`（见 `Sources/MacAppFixerCore/Localization.swift`），实际文案放在：
 
 - `Resources/en.lproj/Localizable.strings`（英文 / 兜底）
 - `Resources/zh-Hans.lproj/Localizable.strings`（简体中文）
@@ -66,6 +68,6 @@ open build/MacUnblock.app
 ## 代码规范
 
 - 遵循 Swift API Design Guidelines，保持现有写法
-- **逻辑层 `MacUnblockCore` 不得引入 AppKit**；凡是给应用层使用（即跨模块）的类型与成员，必须标 `public`
-- 主应用**刻意不使用 App Sandbox**（沙箱内无法写 `com.apple.quarantine`），`Resources/MacUnblock.entitlements` 保持为空
+- **逻辑层 `MacAppFixerCore` 不得引入 AppKit**；凡是给应用层使用（即跨模块）的类型与成员，必须标 `public`
+- 主应用**刻意不使用 App Sandbox**（沙箱内无法写 `com.apple.quarantine`），`Resources/MacAppFixer.entitlements` 保持为空
 - 不要改用子进程调用 `/usr/bin/xattr`（sandbox extension 不会继承给子进程，会 `EPERM`），继续用进程内 `listxattr` / `removexattr`

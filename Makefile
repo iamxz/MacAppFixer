@@ -1,6 +1,6 @@
-# MacUnblock - 构建 / 安装 / 发版 Makefile
+# MacAppFixer - 构建 / 安装 / 发版 Makefile
 #
-#   make / make build   # 编译 + 组装成 build/MacUnblock.app（本机架构）
+#   make / make build   # 编译 + 组装成 build/MacAppFixer.app（本机架构）
 #   make universal      # 通用架构（arm64 + x86_64）组装 .app
 #   make test           # 运行单元测试（swift test）
 #   make install        # 组装 + 安装到 /Applications
@@ -8,15 +8,15 @@
 #   make status         # 查看安装与运行状态
 #   make uninstall      # 移到废纸篓并注销登记（可恢复）
 #   make clean          # 清理 .build / build
-#   make pkg            # 通用架构编译 + 打成 build/MacUnblock-<版本>.pkg
+#   make pkg            # 通用架构编译 + 打成 build/MacAppFixer-<版本>.pkg
 #   make dist           # pkg + .app.zip + checksums.txt（CI 发版用）
 #   make release        # 发版：VERSION=<x.y.z|patch|minor|major> [MSG="..."] [NOTES="..."]
 #
 # 构建基于 Swift Package Manager（见 Package.swift）：`swift build` 产出可执行文件，
 # 再由 assemble 组装成 .app —— Info.plist / 图标 / 本地化 / entitlements 全部来自 Resources/。
 
-APP_NAME     := MacUnblock
-BUNDLE_ID    := com.macunblock.app
+APP_NAME     := MacAppFixer
+BUNDLE_ID    := com.macappfixer.app
 BUILD_DIR    := $(CURDIR)/build
 APP_BUNDLE   := $(BUILD_DIR)/$(APP_NAME).app
 TARGET_APP   := /Applications/$(APP_NAME).app
@@ -41,7 +41,7 @@ SWIFT_FLAGS  ?=
 
 all: build
 
-## 编译 + 组装成本机架构的 .app（产物在 build/MacUnblock.app）
+## 编译 + 组装成本机架构的 .app（产物在 build/MacAppFixer.app）
 build: app
 
 ## 编译 + 组装 .app（ARCHS 留空 = 本机架构）
@@ -127,7 +127,7 @@ uninstall:
 	fi
 	@FOUND_ID=$$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$(TARGET_APP)/Contents/Info.plist" 2>/dev/null || echo ""); \
 	if [ "$$FOUND_ID" != "$(BUNDLE_ID)" ]; then \
-		echo "⚠️  $(TARGET_APP) 不是 MacUnblock（bundle id: $$FOUND_ID），已中止"; \
+		echo "⚠️  $(TARGET_APP) 不是 MacAppFixer（bundle id: $$FOUND_ID），已中止"; \
 		exit 1; \
 	fi
 	@echo "🚪 退出应用（如在运行）..."
@@ -140,7 +140,7 @@ uninstall:
 	@DEST="$$HOME/.Trash/$(APP_NAME)-$$(date +%Y%m%d-%H%M%S).app"; \
 	mv "$(TARGET_APP)" "$$DEST" && echo "✅ 已移到: $$DEST"
 
-## 通用架构编译 + 打成 .pkg 安装包（双击装到 /Applications/MacUnblock.app）
+## 通用架构编译 + 打成 .pkg 安装包（双击装到 /Applications/MacAppFixer.app）
 pkg:
 	test -n "$(PKG_VERSION)"
 	@$(MAKE) assemble ARCHS="$(UNIVERSAL)"
@@ -171,9 +171,9 @@ release:
 	@NOTES='$(NOTES)' NOTES_FILE='$(NOTES_FILE)' scripts/release.sh '$(VERSION)' '$(MSG)'
 
 help:
-	@echo "MacUnblock Makefile（Swift Package Manager）"
+	@echo "MacAppFixer Makefile（Swift Package Manager）"
 	@echo ""
-	@echo "  make / make build  编译 + 组装 .app（产物在 build/MacUnblock.app）"
+	@echo "  make / make build  编译 + 组装 .app（产物在 build/MacAppFixer.app）"
 	@echo "  make universal     通用架构（arm64 + x86_64）的 .app"
 	@echo "  make test          运行单元测试"
 	@echo "  make install       组装 + 安装到 /Applications   ← 常用"

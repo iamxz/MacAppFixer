@@ -15,7 +15,7 @@ Briefly describe what this PR does.
 ## 测试 / Testing
 - [ ] 已运行 `make build`（编译 + 组装 + 签名）且通过 / Built & signed successfully
 - [ ] 已运行 `make test` 且通过 / Unit tests pass
-- [ ] 已验证签名 `codesign --verify --deep --strict build/MacUnblock.app`
+- [ ] 已验证签名 `codesign --verify --deep --strict build/MacAppFixer.app`
 - [ ] 已手动测试 / Manually tested
 
 ## 截图（如适用）/ Screenshots (if applicable)

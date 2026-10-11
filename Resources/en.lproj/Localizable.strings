@@ -1,4 +1,4 @@
-/* MacUnblock — English (development language) */
+/* MacAppFixer — English (development language) */
 
 /* Main window */
 "window.subtitle" = "Drag an installer below, or click to choose a file";
@@ -46,7 +46,7 @@
 "unblock.done" = "Removed %d extended attribute(s)";
 
 /* System error descriptions */
-"err.permission" = "Permission denied (%@). Grant MacUnblock access in System Settings → Privacy & Security → Full Disk Access, then try again. If the file is in a protected folder (Desktop, Downloads, Documents), click “Allow” in the system prompt the first time you access it";
+"err.permission" = "Permission denied (%@). Grant MacAppFixer access in System Settings → Privacy & Security → Full Disk Access, then try again. If the file is in a protected folder (Desktop, Downloads, Documents), click “Allow” in the system prompt the first time you access it";
 "err.readonly" = "The file system is read-only; extended attributes cannot be modified";
 "err.notsup" = "This file system does not support extended attributes";
 "err.generic" = "%@ (errno %d)";

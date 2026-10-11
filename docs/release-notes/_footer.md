@@ -2,8 +2,8 @@
 
 ## 安装 / Install
 
-1. 下载本页 Assets 里的 `MacUnblock-<版本>.pkg`，双击即可安装到 `/Applications/MacUnblock.app`；或下载 `MacUnblock-<版本>.app.zip`，解压后拖入「应用程序」。
-   Download `MacUnblock-<version>.pkg` from the Assets below and double-click to install into `/Applications/MacUnblock.app`; or download `MacUnblock-<version>.app.zip`, unzip and drag it into Applications.
+1. 下载本页 Assets 里的 `MacAppFixer-<版本>.pkg`，双击即可安装到 `/Applications/MacAppFixer.app`；或下载 `MacAppFixer-<版本>.app.zip`，解压后拖入「应用程序」。
+   Download `MacAppFixer-<version>.pkg` from the Assets below and double-click to install into `/Applications/MacAppFixer.app`; or download `MacAppFixer-<version>.app.zip`, unzip and drag it into Applications.
 2. 校验下载完整性 / Verify the download:
    ```sh
    shasum -a 256 -c checksums.txt

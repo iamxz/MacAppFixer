@@ -1,5 +1,5 @@
 import Cocoa
-import MacUnblockCore
+import MacAppFixerCore
 
 // MARK: - Drop Area View
 

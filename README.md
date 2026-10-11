@@ -1,23 +1,25 @@
-[![CI](https://github.com/iamxz/MacUnblockApp/actions/workflows/ci.yml/badge.svg)](https://github.com/iamxz/MacUnblockApp/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/iamxz/MacUnblockApp)](https://github.com/iamxz/MacUnblockApp/releases)
+[![CI](https://github.com/iamxz/MacAppFixer/actions/workflows/ci.yml/badge.svg)](https://github.com/iamxz/MacAppFixer/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/iamxz/MacAppFixer)](https://github.com/iamxz/MacAppFixer/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# MacUnblock
+# MacAppFixer
 
 **English** | [简体中文](README.zh-CN.md)
 
-<img src="screenshots/icon.png" width="112" alt="MacUnblock app icon">
+<img src="screenshots/icon.png" width="112" alt="MacAppFixer app icon">
 
-A tiny macOS utility: drop an installer onto the window — or pick one with "Choose File…" — and it strips the quarantine attributes (`com.apple.quarantine`, etc.) in one click, so the "damaged / unverified developer" warning goes away.
+**Fixes Mac apps that refuse to install: "is damaged and can't be opened", "cannot be launched because it is from an unidentified developer".**
+
+A tiny macOS utility: drop an installer onto the window — or pick one with "Choose File…" — and it strips the quarantine attributes (`com.apple.quarantine`, etc.) in one click, so the warning goes away.
 
 Supports `.app`, `.pkg`, `.mpkg`, `.dmg`, `.ipa`, `.appex`. The UI is bilingual (English / 简体中文) and follows your macOS language automatically.
 
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/screenshot-en.jpg" width="360" alt="MacUnblock main window (English)">
+  <img src="screenshots/screenshot-en.jpg" width="360" alt="MacAppFixer main window (English)">
   &nbsp;&nbsp;
-  <img src="screenshots/screenshot-zh.jpg" width="360" alt="MacUnblock main window (Simplified Chinese)">
+  <img src="screenshots/screenshot-zh.jpg" width="360" alt="MacAppFixer main window (Simplified Chinese)">
 </p>
 
 ## Features
@@ -37,27 +39,29 @@ Supports `.app`, `.pkg`, `.mpkg`, `.dmg`, `.ipa`, `.appex`. The UI is bilingual 
 
 ### Download (recommended)
 
-Get the latest `.pkg` from [GitHub Releases](https://github.com/iamxz/MacUnblockApp/releases) and double-click to install to `/Applications/MacUnblock.app`; or grab `.app.zip`, unzip and drag into Applications.
+Get the latest `.pkg` from [GitHub Releases](https://github.com/iamxz/MacAppFixer/releases) and double-click to install to `/Applications/MacAppFixer.app`; or grab `.app.zip`, unzip and drag into Applications.
 
 > Ad-hoc signed, not notarized. If Gatekeeper blocks it: right-click → "Open", or System Settings → Privacy & Security → "Open Anyway".
+
+> Renamed from **MacUnblock** (old bundle id `com.macunblock.app`). Since the bundle id changed, the new app won't overwrite an old install — delete `/Applications/MacUnblock.app` first.
 
 ### Build from source
 
 ```bash
-git clone https://github.com/iamxz/MacUnblockApp.git
-cd MacUnblockApp
-make install      # build → sign → install to /Applications/MacUnblock.app
+git clone https://github.com/iamxz/MacAppFixer.git
+cd MacAppFixer
+make install      # build → sign → install to /Applications/MacAppFixer.app
 ```
 
 ## Usage
 
-1. Open `/Applications/MacUnblock.app`
+1. Open `/Applications/MacAppFixer.app`
 2. Drag a file onto the drop area, or click it / "Choose File…" (⌘ / ⇧ to multi-select)
 3. Attributes are removed; the result shows at the bottom
 
 ## FAQ
 
-**Permission denied?** Files in Desktop / Downloads / Documents prompt for Full Disk Access on first use — click "Allow". If you previously denied it, enable MacUnblock under System Settings → Privacy & Security → Full Disk Access, then relaunch.
+**Permission denied?** Files in Desktop / Downloads / Documents prompt for Full Disk Access on first use — click "Allow". If you previously denied it, enable MacAppFixer under System Settings → Privacy & Security → Full Disk Access, then relaunch.
 
 **Re-asked to authorize after a rebuild?** The app is ad-hoc signed, so each rebuild changes its identity. Keep it in `/Applications` and rebuild less often to cut the prompts.
 
@@ -79,7 +83,7 @@ Built with Swift Package Manager. Key `make` targets:
 
 | Command | What it does |
 |---------|--------------|
-| `make` / `make build` | Build + assemble → `build/MacUnblock.app` |
+| `make` / `make build` | Build + assemble → `build/MacAppFixer.app` |
 | `make universal` | Universal (arm64 + x86_64) |
 | `make test` | Unit tests |
 | `make install` | Assemble + install to `/Applications` |

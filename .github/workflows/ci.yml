@@ -38,11 +38,11 @@ jobs:
         run: make universal
 
       - name: Verify code signature
-        run: codesign --verify --deep --strict build/MacUnblock.app
+        run: codesign --verify --deep --strict build/MacAppFixer.app
 
       - name: Verify universal binary
         run: |
-          archs="$(lipo -archs build/MacUnblock.app/Contents/MacOS/MacUnblock)"
+          archs="$(lipo -archs build/MacAppFixer.app/Contents/MacOS/MacAppFixer)"
           echo "archs: ${archs}"
           echo "${archs}" | grep -q arm64
           echo "${archs}" | grep -q x86_64
@@ -51,6 +51,6 @@ jobs:
         run: |
           set -e
           for lang in en zh-Hans; do
-            test -f "build/MacUnblock.app/Contents/Resources/${lang}.lproj/Localizable.strings"
+            test -f "build/MacAppFixer.app/Contents/Resources/${lang}.lproj/Localizable.strings"
             echo "ok: ${lang}"
           done

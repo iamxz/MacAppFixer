@@ -1,12 +1,12 @@
 # 贡献指南 / Contributing
 
-感谢你对 MacUnblock 项目的关注！欢迎各种形式的贡献。
-Thanks for your interest in MacUnblock — all kinds of contributions are welcome.
+感谢你对 MacAppFixer 项目的关注！欢迎各种形式的贡献。
+Thanks for your interest in MacAppFixer — all kinds of contributions are welcome.
 
 ## 报告 Bug / Report a bug
 
-请通过 [GitHub Issues](https://github.com/iamxz/MacUnblockApp/issues) 报告，并使用 Bug 报告模板，附上：
-Please file it on [GitHub Issues](https://github.com/iamxz/MacUnblockApp/issues) using the bug template, including:
+请通过 [GitHub Issues](https://github.com/iamxz/MacAppFixer/issues) 报告，并使用 Bug 报告模板，附上：
+Please file it on [GitHub Issues](https://github.com/iamxz/MacAppFixer/issues) using the bug template, including:
 
 - 清晰的问题描述 / a clear description
 - 复现步骤 / steps to reproduce
@@ -16,7 +16,7 @@ Please file it on [GitHub Issues](https://github.com/iamxz/MacUnblockApp/issues)
 
 ## 提交功能建议 / Suggest a feature
 
-欢迎通过 [GitHub Issues](https://github.com/iamxz/MacUnblockApp/issues) 使用功能建议模板提交。
+欢迎通过 [GitHub Issues](https://github.com/iamxz/MacAppFixer/issues) 使用功能建议模板提交。
 Open an issue with the feature-request template.
 
 ## Pull Request
@@ -25,10 +25,10 @@ Open an issue with the feature-request template.
 
 1. Fork 并克隆仓库 / Fork and clone
    ```bash
-   git clone https://github.com/your-username/MacUnblockApp.git
-   cd MacUnblockApp
+   git clone https://github.com/your-username/MacAppFixer.git
+   cd MacAppFixer
    ```
-2. 构建（产物在 `build/MacUnblock.app`）/ Build
+2. 构建（产物在 `build/MacAppFixer.app`）/ Build
    ```bash
    make build
    ```
@@ -38,10 +38,10 @@ Open an issue with the feature-request template.
    ```
 4. 验证签名 / Verify signature
    ```bash
-   codesign --verify --deep --strict build/MacUnblock.app
+   codesign --verify --deep --strict build/MacAppFixer.app
    ```
 
-> 项目用 Swift Package Manager 组织（`Package.swift`）；逻辑层在 `Sources/MacUnblockCore/`，应用层在 `Sources/MacUnblock/`，新增源文件无需改动工程文件。
+> 项目用 Swift Package Manager 组织（`Package.swift`）；逻辑层在 `Sources/MacAppFixerCore/`，应用层在 `Sources/MacAppFixer/`，新增源文件无需改动工程文件。
 > `CI` 以「编译通过 + 单元测试通过 + 签名校验 + 通用二进制 + 本地化资源齐全」作为通过标准。
 > The project uses Swift Package Manager (`Package.swift`); CI passes on “compiles + unit tests pass + signature verifies + universal binary + localizations present”.
 
@@ -71,7 +71,7 @@ When adding or changing any user-facing string, you **must** update both files:
 - `Resources/en.lproj/Localizable.strings`
 - `Resources/zh-Hans.lproj/Localizable.strings`
 
-文案通过 `L.t("key")` 取用（见 `Sources/MacUnblockCore/Localization.swift`）。带参数时用 `%@` / `%d` 占位符。
+文案通过 `L.t("key")` 取用（见 `Sources/MacAppFixerCore/Localization.swift`）。带参数时用 `%@` / `%d` 占位符。
 Strings are retrieved via `L.t("key")`; use `%@` / `%d` placeholders for parameters.
 
 ## 获取帮助 / Getting help
