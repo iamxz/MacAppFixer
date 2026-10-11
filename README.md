@@ -110,7 +110,7 @@ Scan with **WeChat** or **Alipay** to support — your encouragement keeps the p
   </tr>
 </table>
 
-> The QR codes live at `screenshots/wechat.jpg` and `screenshots/alipay.jpg`, also shown in the in-app "Sponsor" panel.
+> The in-app "Sponsor ♥" button doesn't open a dialog — it just links to this repository page in your default browser.
 
 ## License
 

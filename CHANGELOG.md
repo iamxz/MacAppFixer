@@ -9,17 +9,21 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-11
+
 ### 中文
 
 **变更**
 - 项目更名为 **MacAppFixer**（曾用名 MacUnblock）：App 名、bundle id（`com.macappfixer.app`）、模块名、构建产物与仓库地址同步更新
 - 更名不影响功能：bundle id 变了，新版本不会覆盖旧安装，需手动删除 `/Applications/MacUnblock.app`
+- 「赞助 ♥」改为用默认浏览器打开 GitHub 仓库页，移除应用内的微信 / 支付宝收款码面板（收款码仍在 README 中），`.app` 也不再打包这两张图片
 
 ### English
 
 **Changed**
 - Renamed to **MacAppFixer** (formerly MacUnblock): app name, bundle id (`com.macappfixer.app`), module names, build artifacts and repository URL
 - Functionality is unchanged: the bundle id changed, so the new build won't replace an old install — delete `/Applications/MacUnblock.app` manually
+- The "Sponsor ♥" button now opens the GitHub repository page in the default browser; the in-app WeChat / Alipay QR panel is removed (the codes stay in the README) and those images are no longer bundled
 
 ## [1.0.0] - 2026-10-10
 
@@ -45,5 +49,6 @@ All notable changes to this project are documented here. The format is based on
 - `make pkg` produces a Universal (arm64 + x86_64) installer
 - GitHub Actions: CI build checks + tag-triggered packaging and release
 
-[Unreleased]: https://github.com/iamxz/MacAppFixer/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/iamxz/MacAppFixer/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/iamxz/MacAppFixer/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/iamxz/MacAppFixer/releases/tag/v1.0.0

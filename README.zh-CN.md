@@ -110,7 +110,7 @@ xattr -d  com.apple.quarantine /path/to/DiskImage.dmg
   </tr>
 </table>
 
-> 收款码位于 `screenshots/wechat.jpg` 与 `screenshots/alipay.jpg`，应用内「赞助」面板也会显示。
+> 应用内的「赞助 ♥」按钮不做弹窗，直接用默认浏览器打开本仓库页面。
 
 ## License
 

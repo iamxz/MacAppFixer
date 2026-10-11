@@ -12,14 +12,7 @@
 
 /* 打赏 */
 "sponsor.title" = "赞助 ♥";
-"sponsor.tooltip" = "在浏览器中打开 GitHub Sponsors 打赏页";
-
-/* 赞助面板 */
-"sponsor.panel_title" = "赞助支持 ☕";
-"sponsor.note" = "如果这个小工具帮到了你，欢迎用微信 / 支付宝扫码支持。你的鼓励，是继续维护的动力。";
-"sponsor.wechat" = "微信支付";
-"sponsor.alipay" = "支付宝";
-"sponsor.qr_missing" = "（未找到收款码图片）";
+"sponsor.tooltip" = "在浏览器中打开 GitHub 项目页，收款码在 README 里";
 
 /* 文件选择面板 */
 "panel.title" = "选择要解除限制的安装包";
