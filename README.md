@@ -93,25 +93,6 @@ UI strings live in `Resources/{en,zh-Hans}.lproj/Localizable.strings` via `L.t("
 
 Release: write `docs/release-notes/vX.Y.Z.md`, then `make release VERSION=<x.y.z|patch|minor|major> MSG="…"`. The pushed tag triggers GitHub Actions to publish the Release. See [AGENTS.md](AGENTS.md).
 
-## Sponsor
-
-If this little tool helped you, consider buying the author a coffee ☕
-
-Scan with **WeChat** or **Alipay** to support — your encouragement keeps the project going:
-
-<table align="center" cellpadding="14">
-  <tr>
-    <td align="center"><img src="screenshots/wechat.jpg" width="180" alt="WeChat QR"></td>
-    <td align="center"><img src="screenshots/alipay.jpg" width="180" alt="Alipay QR"></td>
-  </tr>
-  <tr>
-    <td align="center">WeChat Pay</td>
-    <td align="center">Alipay</td>
-  </tr>
-</table>
-
-> The in-app "Sponsor ♥" button doesn't open a dialog — it just links to this repository page in your default browser.
-
 ## License
 
 [MIT](LICENSE) © 2026 iamxz

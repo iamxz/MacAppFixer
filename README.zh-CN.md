@@ -93,25 +93,6 @@ xattr -d  com.apple.quarantine /path/to/DiskImage.dmg
 
 发版：先写好 `docs/release-notes/vX.Y.Z.md`，再执行 `make release VERSION=<x.y.z|patch|minor|major> MSG="…"`，推送 tag 后 GitHub Actions 自动发布 Release。详见 [AGENTS.md](AGENTS.md)。
 
-## 赞助支持
-
-如果这个小工具帮到了你，欢迎请作者喝杯咖啡 ☕
-
-用 **微信** 或 **支付宝** 扫码即可支持，你的鼓励是继续维护下去的动力：
-
-<table align="center" cellpadding="14">
-  <tr>
-    <td align="center"><img src="screenshots/wechat.jpg" width="180" alt="微信赞赏二维码"></td>
-    <td align="center"><img src="screenshots/alipay.jpg" width="180" alt="支付宝赞赏二维码"></td>
-  </tr>
-  <tr>
-    <td align="center">微信支付</td>
-    <td align="center">支付宝</td>
-  </tr>
-</table>
-
-> 应用内的「赞助 ♥」按钮不做弹窗，直接用默认浏览器打开本仓库页面。
-
 ## License
 
 [MIT](LICENSE) © 2026 iamxz
