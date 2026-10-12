@@ -249,8 +249,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// 不启用窗口状态恢复（Restorable State）。
+    /// 当前窗口没有设置 restorationClass / frameAutosaveName，开启 secure restorable
+    /// state 后 NSPersistentUIManager 会在运行循环里反复追踪窗口状态，在部分 macOS
+    /// 版本上会过度释放其内部记录对象，导致主线程 autorelease pool drain 时
+    /// EXC_BAD_ACCESS（objc_release 读到 NULL isa）。保持关闭即可（默认即关闭）。
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
-        return true
+        return false
     }
 }
 
